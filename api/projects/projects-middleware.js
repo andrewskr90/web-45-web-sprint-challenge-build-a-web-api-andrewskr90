@@ -4,15 +4,16 @@ const Projects = require('./projects-model')
 const validateProjects = (req, res, next) => {
     Projects.get()
         .then(projects => {
-            console.log(projects)
-            if (projects.length < 1) {
+            if (!projects.length) {
                 res.status(404).json([])
             } else {
                 req.projects = projects
                 next()
             }
         })
-        .catch(next)
+        .catch(err => {
+            next(err)
+        })
 }
 
 const validateProjectId = (req, res, next) => {
@@ -28,7 +29,9 @@ const validateProjectId = (req, res, next) => {
                 next()
             }
         })
-        .catch(next)
+        .catch(err => {
+            next(err)
+        })
 }
 
 const validateProject = (req, res, next) => {
@@ -61,16 +64,16 @@ const validateProjectEdit = (req, res, next) => {
             message: "missing required field completed"
         })
     } else {
-        console.log(req.body)
         next()
     }
 }
 
 const validateProjectActions = (req, res, next) => {
-    const { actions } = req.project.actions
-    if (!actions) {
+    const { actions } = req.project
+    if (!actions.length) {
         res.status(400).json([])
     } else {
+        req.actions = actions
         next()
     }
 }

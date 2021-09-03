@@ -4,15 +4,15 @@ const Projects = require('./projects-model')
 const { validateProject, validateProjects, validateProjectId, validateProjectEdit, validateProjectActions } = require('./projects-middleware')
 const router = express.Router()
 
-router.get('/projects', validateProjects, (req,res) => {
+router.get('/', validateProjects, (req,res) => {
     res.status(200).json(req.projects)
 })
 
-router.get('/projects/:id', validateProjectId, (req, res) => {
+router.get('/:id', validateProjectId, (req, res) => {
     res.status(200).json(req.project)
 })
 
-router.post('/projects', validateProject, (req, res, next) => {
+router.post('/', validateProject, (req, res, next) => {
     Projects.insert(req.body)
         .then(project => {
             res.status(201).json(project)
@@ -20,17 +20,16 @@ router.post('/projects', validateProject, (req, res, next) => {
         .catch(next)
 })
 
-router.put('/projects/:id', validateProjectEdit, (req, res, next) => {
+router.put('/:id', validateProjectEdit, (req, res, next) => {
     const { id } = req.params
     Projects.update(id, req.body)
         .then(projectEdit => {
-            console.log(projectEdit)
                 res.status(200).json(projectEdit)
         })
         .catch(next)
 })
 
-router.delete('/projects/:id', validateProjectId, (req, res) => {
+router.delete('/:id', validateProjectId, (req, res) => {
     const { id } = req.params
     Projects.remove(id)
         .then(numberRemoved => {
@@ -46,19 +45,21 @@ router.delete('/projects/:id', validateProjectId, (req, res) => {
         })
 })
 
-router.get('/projects/:id/actions', validateProjectId, validateProjectActions, (req, res) => {
-    const { id } = req.params
-    const project = req.project
-
-
+router.get('/:id/actions', validateProjectId, validateProjectActions, (req, res, next) => {
+    const { id } = req.params  
+    Projects.getProjectActions(id)
+        .then(projectActions => {
+            res.status(200).json(projectActions)
+        })
+        .catch(next)
 })
 
 
-router.use((err, req, res, next) => {
-    console.log(err.message)
+router.use((err, req, res) => {
     res.status(err.status || 500)
         .json({
             message: err.message
         })
 })
+
 module.exports = router

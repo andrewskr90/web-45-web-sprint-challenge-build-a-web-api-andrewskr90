@@ -7,7 +7,8 @@ const cors = require('cors')
 server.use(express.json())
 server.use(cors())
 
-server.use('/api', actionsRouter, projectsRouter)
+server.use('/api/projects', projectsRouter)
+server.use('/api/actions', actionsRouter)
 
 server.get('/', (req, res) => {
     res.send(`<h1>Projects and Actions!</h1>`)
