@@ -137,17 +137,28 @@ We have provided test data for all the resources.
 
 ## Submission format
 
-- [ ] Submit via Codegrade by pushing commits to your `<firstName-lastName>` branch.
-- [ ] Check Codegrade before the deadline to compare its results against your local tests.
-- [ ] Check Codegrade on the days following the Sprint Challenge for reviewer feedback.
-- [ ] New commits will be evaluated by Codegrade if pushed _before_ the sprint challenge deadline.
+- [x] Submit via Codegrade by pushing commits to your `<firstName-lastName>` branch.
+- [x] Check Codegrade before the deadline to compare its results against your local tests.
+- [x] Check Codegrade on the days following the Sprint Challenge for reviewer feedback.
+- [x] New commits will be evaluated by Codegrade if pushed _before_ the sprint challenge deadline.
 
 ## Interview Questions
 
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics. You might prepare by writing down your own answers before hand.
 
 1. The core features of Node.js and Express and why they are useful.
-1. Understand and explain the use of Middleware.
-1. The basic principles of the REST architectural style.
-1. Understand and explain the use of Express Routers.
-1. Describe tooling used to manually test the correctness of an API.
+  Node.js is useful because it allows developers to use JavaScript while writing server side code. 
+  JavaScript is single-threaded, asynchronous, and gives us access to the npm repo. Express is a light and unopinionated framework that sits on top of node.js, it makes the HTTP module within node.js much more accessible and easy to use.
+
+2. Understand and explain the use of Middleware.
+  Middleware is a filter or conditioner that incoming data runs through on our server. They can do anything from parse on language to another, log the time of a request, or contain a custom filter for the request.
+
+3. The basic principles of the REST architectural style.
+  REST, Representational State Transfer, is a way of designing and distributing software. There are six constraints to REST: client server architecture, the server follows a stateless protocol, available caching, uniform interfaces, layered systems, and code on demand.
+  
+4. Understand and explain the use of Express Routers.
+  Express Routers organizes which responses to deliver for each request sent to the server. They are organized by the URL of the request. Every request should end in a response from the server to the client.
+
+5. Describe tooling used to manually test the correctness of an API.
+  Tools like httpie and postman allow us to communicate with an API. We can perform any type of request to any address, with any variation of the request body. With this we can trigger an error, or recieve the correct data from the server.
+
