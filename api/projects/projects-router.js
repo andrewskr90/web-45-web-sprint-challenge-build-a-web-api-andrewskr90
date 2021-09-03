@@ -1,7 +1,7 @@
 // Write your "projects" router here!
 const express = require('express')
 const Projects = require('./projects-model')
-const { validateProject, validateProjects, validateProjectId, validateProjectEdit } = require('./projects-middleware')
+const { validateProject, validateProjects, validateProjectId, validateProjectEdit, validateProjectActions } = require('./projects-middleware')
 const router = express.Router()
 
 router.get('/projects', validateProjects, (req,res) => {
@@ -29,6 +29,30 @@ router.put('/projects/:id', validateProjectEdit, (req, res, next) => {
         })
         .catch(next)
 })
+
+router.delete('/projects/:id', validateProjectId, (req, res) => {
+    const { id } = req.params
+    Projects.remove(id)
+        .then(numberRemoved => {
+            if (numberRemoved < 1) {
+                res.status(400).json({
+                    message: "unable to remove project"
+                })
+            } else {
+                res.status(200).json({
+                    message: `successfully removed ${numberRemoved} project`
+                })
+            }
+        })
+})
+
+router.get('/projects/:id/actions', validateProjectId, validateProjectActions, (req, res) => {
+    const { id } = req.params
+    const project = req.project
+
+
+})
+
 
 router.use((err, req, res, next) => {
     console.log(err.message)

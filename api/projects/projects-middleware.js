@@ -66,9 +66,19 @@ const validateProjectEdit = (req, res, next) => {
     }
 }
 
+const validateProjectActions = (req, res, next) => {
+    const { actions } = req.project.actions
+    if (!actions) {
+        res.status(400).json([])
+    } else {
+        next()
+    }
+}
+
 module.exports = {
     validateProject,
     validateProjects,
     validateProjectId,
-    validateProjectEdit
+    validateProjectEdit,
+    validateProjectActions
 }
